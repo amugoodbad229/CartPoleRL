@@ -1,112 +1,159 @@
 # CartPoleRL
 
-A reinforcement learning agent that solves the CartPole environment using the PPO algorithm.
+Train a reinforcement learning agent to balance the CartPole using Proximal Policy Optimization (PPO) with Stable-Baselines3. The project uses `uv` for fast, reproducible Python environments and includes TensorBoard logging and an ONNX export utility.
 
-This project uses **`uv`** for fast and reproducible setups.
+## Features
 
-## Getting Started
+- PPO agent built with Stable-Baselines3
+- Reproducible environment and fast installs via `uv`
+- TensorBoard training metrics and visualizations
+- Optional GPU acceleration (PyTorch CUDA)
+- ONNX export script for deployment
+- ProtoTwin Connect (PTC) integration
 
-**Prerequisites:** 
-[1] Python 3.10+
-[2] NVIDIA GPU updated to the latest NVIDIA driver
-[3] ProtoTwin Connect (PTC)
+---
 
-**1. Clone the repository:**
+## Prerequisites
+
+- Python 3.10+
+- Optional: NVIDIA GPU for CUDA acceleration
+- ProtoTwin Connect (PTC)
+
+Note: The project runs on CPU if a compatible GPU is not available.
+
+---
+
+## Quickstart
+
+1) Clone the repository
 ```bash
 git clone https://github.com/amugoodbad229/CartPoleRL.git
-
-# Change directory
-cd CartpoleRL
+cd CartPoleRL
 ```
 
-**2. Install everything with one command:**
-This creates a local .venv and installs all dependencies, including the correct GPU version of PyTorch
+2) Install `uv` (if you don’t have it)
+- Windows (PowerShell):
+```powershell
+powershell -ExecutionPolicy Bypass -Command "iwr https://astral.sh/uv/install.ps1 -UseBasicParsing | iex"
+```
+- macOS/Linux:
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
 
+3) Create the virtual environment and install dependencies
 ```bash
 uv sync
 ```
+This creates a local `.venv` and installs all dependencies (including the appropriate PyTorch build).
 
-**3. Activate the environment:**
-
+4) Activate the environment
 ```bash
 # Windows
 .venv\Scripts\activate
 
-# Linux/macOS 
+# Linux/macOS
 source .venv/bin/activate
 ```
-Run the Agent
 
-**4. Monitor the agent:**
-
+5) Train the agent
 ```bash
-# Change directory to monitor specific PPO if you are running various PPO models (optional)
-cd tensorboard/PPO_1
-# or
-cd tensorboard/PPO_2 
-# ...
-cd tensorboard/PPO_N
+# Explore available variants
+ls main-v*.py    # or dir main-v*.py on Windows
 
-# Monitor the graphs
-tensorboard --logdir . # Do not forget to add '.'
-# or try this if that doesn't work
-python -m tensorboard.main --logdir tensorboard-vx # replace 'x' with number 0, 1, 2 to 
-                                                   # know which main file you're running
+# Run one variant (replace x with a number, e.g., 1)
+python main-vx.py
 ```
 
-**5. Train the agent**
-
+6) Monitor training with TensorBoard
 ```bash
-python main-vx.py # replace 'x' with number
+# Common pattern if logs are separated by variant number
+tensorboard --logdir tensorboard-v1
+
+# If your logs use PPO_* subfolders, point to that folder:
+tensorboard --logdir tensorboard/PPO_1
+```
+If TensorBoard isn’t found, try:
+```bash
+python -m tensorboard.main --logdir <your-logdir>
 ```
 
-### USEFUL GIT COMMANDS
+---
 
-**Check current status**
+## Project Structure
+
+```text
+.
+├── .venv/                   # Virtual environment managed by uv
+├── logs-vx/                 # Training logs and artifacts for variant x
+│   └── checkpoints/         # Saved model checkpoints
+├── tensorboard-vx/          # TensorBoard logs for variant x
+├── export_onnx.py           # Convert SB3 policy to ONNX
+├── main-vx.py               # Training entry points (variants)
+├── pyproject.toml           # Dependencies and project metadata
+├── uv.lock                  # Lockfile for reproducible builds
+└── README.md                # You are here
+```
+
+Note: Folder names may vary by variant (x). Use the actual paths generated during your runs.
+
+---
+
+## How it works
+
+- Environment: Gymnasium’s CartPole environment
+- Algorithm: Proximal Policy Optimization (PPO) via Stable-Baselines3
+- Objective: Learn a policy to keep the pole balanced by moving the cart left or right
+
+---
+
+## Export to ONNX
+
+Export a trained Stable-Baselines3 policy to ONNX:
 ```bash
+# See available options
+python export_onnx.py
+```
+---
+
+## Useful Git commands
+
+```bash
+# Check current status
 git status
-```
 
-**Add all changes to staging**
-```bash
+# Add all changes
 git add .
-```
 
-**Commit your changes**
-```bash
-git commit -m "Add CartPole RL implementation with PPO and ProtoTwin integration"
-```
+# Commit your changes
+git commit -m "Improve README and training instructions"
 
-**Push changes to GitHub**
-```bash
+# Push to GitHub
 git push
 ```
 
-### Project Structure
+---
 
-.
-├── .venv/                   # Virtual environment managed by uv
-├── logs-vx/cheackpoints/    # Saved model checkpoints
-├── ...                      # Other saved model checkpoints
-├── tensorboard-vx/          # TensorBoard logs for monitoring training
-├── ...                      # Other TensorBoard logs for monitoring training
-├── .gitignore               # Files to ignore for Git
-├── export_onnx.py           # convert SB3 policy to ONNX policy
-├── main-vx.py               # Main script to train the agent
-├── ...                      # Different versions of main script to train the agent
-├── pyproject.toml           # Project dependencies and metadata
-├── README.md                # Guideline for the newcomers
-└── uv.lock                  # Lockfile for reproducible builds
+## Troubleshooting
 
-### How It Works?
+- uv not found:
+  - Install uv (see Quickstart step 2) or ensure it’s on your PATH.
+- TensorBoard not showing data:
+  - Confirm the correct log directory (e.g., tensorboard-v1 or tensorboard/PPO_1)
+  - Ensure training has produced logs.
+- Using CPU instead of GPU:
+  - PyTorch will fall back to CPU if CUDA is unavailable. To check:
+    ```python
+    import torch; print(torch.cuda.is_available())
+    ```
+- Case-sensitive paths:
+  - Ensure you `cd CartPoleRL` (capitalization matters on Linux/macOS).
 
-**Environment:** The agent operates in the CartPole environment from the Gymnasium library.
+---
 
-**Algorithm:** It uses the Proximal Policy Optimization (PPO) algorithm, a state-of-the-art reinforcement learning algorithm, implemented via the Stable Baselines3 library.
+## Resources
 
-**Goal:** The agent's objective is to learn a policy that moves the cart left or right to keep the attached pole balanced upright for as long as possible.
+- Notes PDF: [Important understandings (PDF)](https://jumpshare.com/share/5R2Vt26zIvwhY93lSeQS)
+- Curated resources: [tldraw board](https://www.tldraw.com/f/T6oHe2VW4S5P4fRhE0Aqv?d=v-941.3915.2132.1013.0Nu4aCQvq1Lg7bbzkZt0N)
 
-### Important links:
-
-[PDF](https://jumpshare.com/share/5R2Vt26zIvwhY93lSeQS) --> Added important understandings here
-[tldraw](https://www.tldraw.com/f/T6oHe2VW4S5P4fRhE0Aqv?d=v-941.3915.2132.1013.0Nu4aCQvq1Lg7bbzkZt0N) --> Added most resources here
+---
