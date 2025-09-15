@@ -26,8 +26,6 @@ Train a reinforcement learning agent to balance the CartPole using Proximal Poli
 > - If you have multiple Python versions installed, make sure your shell uses Python 3.10+ within the `uv` environment.
 > - The project runs on CPU if a compatible GPU is not available.
 
-Note: The project runs on CPU if a compatible GPU is not available.
-
 ---
 
 ## Quickstart
