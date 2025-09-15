@@ -49,13 +49,12 @@ cd tensorboard/PPO_N
 
 # Monitor the graphs
 tensorboard --logdir . # Do not forget to add '.'
-# or try this if that not works
-python -m tensorboard.main --logdir tensorboard-vx # replace 'x' use number 0, 1, 2 to 
-                                                   # know which main file you re running
+# or try this if that doesn't work
+python -m tensorboard.main --logdir tensorboard-vx # replace 'x' with number 0, 1, 2 to 
+                                                   # know which main file you're running
 ```
 
-**5. Train the agent**\\
-Once the environment is activated, train the agent by running:
+**5. Train the agent**
 
 ```bash
 python main-vx.py # replace 'x' with number
