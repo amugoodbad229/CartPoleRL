@@ -100,11 +100,11 @@ git push
 
 ### How It Works?
 
-Environment: The agent operates in the CartPole environment from the Gymnasium library.
+**Environment:** The agent operates in the CartPole environment from the Gymnasium library.
 
-Algorithm: It uses the Proximal Policy Optimization (PPO) algorithm, a state-of-the-art reinforcement learning algorithm, implemented via the Stable Baselines3 library.
+**Algorithm:** It uses the Proximal Policy Optimization (PPO) algorithm, a state-of-the-art reinforcement learning algorithm, implemented via the Stable Baselines3 library.
 
-Goal: The agent's objective is to learn a policy that moves the cart left or right to keep the attached pole balanced upright for as long as possible.
+**Goal:** The agent's objective is to learn a policy that moves the cart left or right to keep the attached pole balanced upright for as long as possible.
 
 ### Important links:
 
