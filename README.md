@@ -61,7 +61,7 @@ Once the environment is activated, train the agent by running:
 python main-vx.py # replace 'x' with number
 ```
 
-#### USEFUL GIT COMMANDS
+### USEFUL GIT COMMANDS
 
 **Check current status**
 ```bash
