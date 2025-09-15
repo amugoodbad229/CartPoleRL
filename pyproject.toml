@@ -1,0 +1,39 @@
+[project]
+name = "cartpolerl"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.10, <3.13"
+
+# --- dependencies ---
+
+dependencies = [
+    "torch",
+    "torchaudio",
+    "torchvision",
+    "gymnasium",
+    "stable-baselines3[extra]",
+    "prototwin",
+    "prototwin-gymnasium",
+    "onnx",
+]
+
+# ONNX is the industry standard for taking a model from its 
+# development environment and deploying it to a production environment
+
+# --- Sources ---
+
+[[tool.uv.index]]
+name = "torch-gpu"
+url = "https://download.pytorch.org/whl/cu126"
+
+[tool.uv.sources]
+torch = { index = "torch-gpu" }
+torchaudio = { index = "torch-gpu" }
+torchvision = { index = "torch-gpu" }
+
+# --- USEFUL COMMANDS ---
+
+# use the below command to delete .venv and uv.lock for clean start 👇
+
+# Remove-Item -Recurse -Force .venv
+# Remove-Item -Force uv.lock
