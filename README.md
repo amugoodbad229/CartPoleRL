@@ -54,7 +54,7 @@ python -m tensorboard.main --logdir tensorboard-vx # replace 'x' use number 0, 1
                                                    # know which main file you re running
 ```
 
-**5. Train the agent**
+**5. Train the agent**\\
 Once the environment is activated, train the agent by running:
 
 ```bash
