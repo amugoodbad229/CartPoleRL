@@ -36,8 +36,6 @@ Clean developer workflow powered by [`uv`](https://github.com/astral-sh/uv) for 
 | Extensibility | Clean project layout – add new envs or models fast |
 | Dev UX | Minimal commands to get started |
 
-> [!TIP]  
-> Want to add new variants? Copy an existing `main-vx.py`, tweak hyperparameters, log into a new `logs-vX/` + `tensorboard-vX/` path.
 
 ---
 
