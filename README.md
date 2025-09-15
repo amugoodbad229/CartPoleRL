@@ -8,7 +8,7 @@ Includes: multiple experiment variants, TensorBoard monitoring, ONNX export, and
   <img src="https://img.shields.io/badge/RL-PPO-orange" />
   <img src="https://img.shields.io/badge/Framework-Stable--Baselines3-green" />
   <img src="https://img.shields.io/badge/Backend-PyTorch-ee4c2c?logo=pytorch" />
-  <img src="https://img.shields.io/badge/Package manger-uv-7834f8" />
+  <img src="https://img.shields.io/badge/Package manager-uv-7834f8" />
   <img src="https://img.shields.io/badge/Status-Active-success" />
 </p>
 
