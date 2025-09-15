@@ -8,7 +8,7 @@ Train a reinforcement learning agent to balance the CartPole using Proximal Poli
 - TensorBoard training metrics and visualizations
 - Optional GPU acceleration (PyTorch CUDA)
 - ONNX export script for deployment
-- ProtoTwin Connect (PTC) integration
+- Inference on ProtoTwin
 
 ---
 
