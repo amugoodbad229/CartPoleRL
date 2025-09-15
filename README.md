@@ -91,7 +91,6 @@ python -m tensorboard.main --logdir tensorboard-vx # replace 'x' use number 0, 1
 
 Export a trained Stable-Baselines3 policy to ONNX:
 ```bash
-# See available options
 python export_onnx.py
 ```
 > [!NOTE]
