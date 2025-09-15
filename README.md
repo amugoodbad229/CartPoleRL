@@ -6,7 +6,6 @@ Train a reinforcement learning agent to balance the CartPole using Proximal Poli
 
 - PPO agent built with Stable-Baselines3
 - TensorBoard training metrics and visualizations
-- GPU acceleration (PyTorch CUDA) [optional]
 - ONNX export script for deployment
 - Inference on ProtoTwin
 
