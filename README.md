@@ -11,6 +11,11 @@ Train a reinforcement learning agent to balance the CartPole using Proximal Poli
 - Inference on ProtoTwin
 
 ---
+## Resources
+> [!IMPORTANT]
+> - Notes PDF: [Important understandings (PDF)](https://jumpshare.com/share/5R2Vt26zIvwhY93lSeQS)
+> - Curated resources: [tldraw board](https://www.tldraw.com/f/T6oHe2VW4S5P4fRhE0Aqv?d=v-941.3915.2132.1013.0Nu4aCQvq1Lg7bbzkZt0N)
+---
 
 ## Prerequisites
 
@@ -160,10 +165,4 @@ git push
 > Case-sensitive paths  
 > Ensure you `cd CartPoleRL`
 
----
-
-## Resources
-
-- Notes PDF: [Important understandings (PDF)](https://jumpshare.com/share/5R2Vt26zIvwhY93lSeQS)
-- Curated resources: [tldraw board](https://www.tldraw.com/f/T6oHe2VW4S5P4fRhE0Aqv?d=v-941.3915.2132.1013.0Nu4aCQvq1Lg7bbzkZt0N)
 ---
