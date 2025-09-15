@@ -52,12 +52,12 @@ Includes: multiple experiment variants, TensorBoard monitoring, ONNX export, and
 ## ✅ Prerequisites
 
 - Python 3.10+  
-- (Optional) NVIDIA GPU + CUDA-capable PyTorch build  
-- (Optional) ProtoTwin Connect (PTC) for deployment  
-- Shell that can run virtual environment activation scripts
+- NVIDIA GPU + CUDA-capable PyTorch build (Optional)  
+- ProtoTwin Connect (PTC) for deployment  
 
 > [!NOTE]  
 > PyTorch falls back to CPU automatically if CUDA is not available.
+> The project will work on CPU, no problem if you do not have GPU
 
 ---
 
