@@ -161,3 +161,10 @@ git push
 > Ensure you `cd CartPoleRL`
 
 ---
+## Acknowledgement
+- Stable Baseline3
+- PyTorch
+- Gymnasium
+- ProtoTwin
+
+---
