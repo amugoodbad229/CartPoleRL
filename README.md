@@ -24,13 +24,13 @@ Note: The project runs on CPU if a compatible GPU is not available.
 
 ## Quickstart
 
-1) Clone the repository
+**1) Clone the repository**
 ```bash
 git clone https://github.com/amugoodbad229/CartPoleRL.git
 cd CartPoleRL
 ```
 
-2) Install `uv` (if you don’t have it)
+**2) Install `uv` (if you don’t have it)**
 - Windows (PowerShell):
 ```powershell
 powershell -ExecutionPolicy Bypass -Command "iwr https://astral.sh/uv/install.ps1 -UseBasicParsing | iex"
@@ -40,13 +40,13 @@ powershell -ExecutionPolicy Bypass -Command "iwr https://astral.sh/uv/install.ps
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-3) Create the virtual environment and install dependencies
+**3) Create the virtual environment and install dependencies**
 ```bash
 uv sync
 ```
 This creates a local `.venv` and installs all dependencies (including the appropriate PyTorch build).
 
-4) Activate the environment
+**4) Activate the environment**
 ```bash
 # Windows
 .venv\Scripts\activate
@@ -55,7 +55,7 @@ This creates a local `.venv` and installs all dependencies (including the approp
 source .venv/bin/activate
 ```
 
-5) Train the agent
+**5) Train the agent**
 ```bash
 # Explore available variants
 ls main-v*.py    # or dir main-v*.py on Windows
@@ -64,7 +64,7 @@ ls main-v*.py    # or dir main-v*.py on Windows
 python main-vx.py
 ```
 
-6) Monitor training with TensorBoard
+**6) Monitor training with TensorBoard**
 ```bash
 # Common pattern if logs are separated by variant number
 tensorboard --logdir tensorboard-v1
