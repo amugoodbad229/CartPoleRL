@@ -152,8 +152,8 @@ git push
 > [!NOTE]
 > Using CPU instead of GPU  
 > PyTorch will fall back to CPU if CUDA is unavailable. To check:
-> ```python
-> import torch; print(torch.cuda.is_available())
+> ```bash
+> python -c "import torch; print(torch.cuda.is_available())"
 > ```
 
 > [!CAUTION]
