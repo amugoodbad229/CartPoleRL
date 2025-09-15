@@ -39,11 +39,11 @@ Clean developer workflow powered by [`uv`](https://github.com/astral-sh/uv) for 
 
 ---
 
-## 📚 Resources
+## 📚 Important Links
 
 > [!IMPORTANT]  
 > • Notes PDF: [Important understandings](https://jumpshare.com/share/5R2Vt26zIvwhY93lSeQS)  
-> • Curated Resource Board: [tldraw board](https://www.tldraw.com/f/T6oHe2VW4S5P4fRhE0Aqv?d=v-941.3915.2132.1013.0Nu4aCQvq1Lg7bbzkZt0N)
+> • Curated Resource: [TLDRAW board](https://www.tldraw.com/f/T6oHe2VW4S5P4fRhE0Aqv?d=v-941.3915.2132.1013.0Nu4aCQvq1Lg7bbzkZt0N)
 
 ---
 
