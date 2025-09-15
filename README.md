@@ -158,7 +158,7 @@ git push
 
 > [!CAUTION]
 > Case-sensitive paths  
-> Ensure you `cd CartPoleRL` (capitalization matters on Linux/macOS).
+> Ensure you `cd CartPoleRL` or the name you gave 
 
 ---
 
