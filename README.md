@@ -1,170 +1,289 @@
-# CartPoleRL
+# 🏋️‍♂️ CartPoleRL  
+Modern PPO-based Reinforcement Learning for solving the classic CartPole control task using [Stable-Baselines3](https://github.com/DLR-RM/stable-baselines3).  
+Clean developer workflow powered by [`uv`](https://github.com/astral-sh/uv) for fast, reproducible Python environments.  
+Includes: multiple experiment variants, TensorBoard monitoring, ONNX export, and ProtoTwin inference support.
 
-Train a reinforcement learning agent to balance the CartPole using Proximal Policy Optimization (PPO) with Stable-Baselines3. The project uses `uv` for fast, reproducible Python environments and includes TensorBoard logging and an ONNX export utility.
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-blue?logo=python" />
+  <img src="https://img.shields.io/badge/RL-PPO-orange" />
+  <img src="https://img.shields.io/badge/Framework-Stable--Baselines3-green" />
+  <img src="https://img.shields.io/badge/Backend-PyTorch-ee4c2c?logo=pytorch" />
+  <img src="https://img.shields.io/badge/Env-uv-7834f8" />
+  <img src="https://img.shields.io/badge/Status-Active-success" />
+</p>
 
-## Features
-
-- PPO agent built with Stable-Baselines3
-- TensorBoard training metrics and visualizations
-- ONNX export script for deployment
-- Inference on ProtoTwin
-
----
-## Resources
-> [!IMPORTANT]
-> - Notes PDF: [Important understandings (PDF)](https://jumpshare.com/share/5R2Vt26zIvwhY93lSeQS)
-> - Curated resources: [tldraw board](https://www.tldraw.com/f/T6oHe2VW4S5P4fRhE0Aqv?d=v-941.3915.2132.1013.0Nu4aCQvq1Lg7bbzkZt0N)
----
-
-## Prerequisites
-
-- Python 3.10+
-- Optional: NVIDIA GPU for CUDA acceleration
-- ProtoTwin Connect (PTC)
-> [!NOTE]
-> If you have multiple Python versions installed, make sure your shell uses Python 3.10+ within the `uv` environment.
-> The project runs on CPU if a compatible GPU is not available.
+<p align="center">
+  <a href="#-quickstart">Quickstart</a> •
+  <a href="#-project-structure">Structure</a> •
+  <a href="#-training--experiment-variants">Training</a> •
+  <a href="#-monitoring">Monitoring</a> •
+  <a href="#-onnx-export--deployment">ONNX</a> •
+  <a href="#-troubleshooting">Troubleshooting</a> •
+  <a href="#-roadmap">Roadmap</a>
+</p>
 
 ---
 
-## Quickstart
+## ✨ Features
 
-**1) Clone the repository**
+| Area | Capability |
+|------|------------|
+| Algorithms | PPO (easily extensible to A2C, DQN, etc.) |
+| Experimentation | Versioned training entrypoints: `main-v1.py`, `main-v2.py`, ... |
+| Monitoring | TensorBoard logs per variant: `tensorboard-v1/`, `tensorboard-v2/` |
+| Export | ONNX conversion via `export_onnx.py` |
+| Deployment | Ready for ProtoTwin (upload ONNX or Python policy) |
+| Extensibility | Clean project layout – add new envs or models fast |
+| Dev UX | Minimal commands to get started |
+
+> [!TIP]  
+> Want to add new variants? Copy an existing `main-vx.py`, tweak hyperparameters, log into a new `logs-vX/` + `tensorboard-vX/` path.
+
+---
+
+## 📚 Resources
+
+> [!IMPORTANT]  
+> • Notes PDF: [Important understandings (PDF)](https://jumpshare.com/share/5R2Vt26zIvwhY93lSeQS)  
+> • Curated Resource Board: [tldraw board](https://www.tldraw.com/f/T6oHe2VW4S5P4fRhE0Aqv?d=v-941.3915.2132.1013.0Nu4aCQvq1Lg7bbzkZt0N)
+
+---
+
+## ✅ Prerequisites
+
+- Python 3.10+  
+- (Optional) NVIDIA GPU + CUDA-capable PyTorch build  
+- (Optional) ProtoTwin Connect (PTC) for deployment  
+- Shell that can run virtual environment activation scripts
+
+> [!NOTE]  
+> PyTorch falls back to CPU automatically if CUDA is not available.
+
+---
+
+## ⚡ Quickstart
+
 ```bash
 git clone https://github.com/amugoodbad229/CartPoleRL.git
-cd CartPoleRL 
+cd CartPoleRL
 ```
 
-**2) Install `uv` (if you don’t have it)**
-- Windows (PowerShell):
-```powershell
+Install `uv` (one time):
+
+```bash
+# macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (PowerShell)
 powershell -ExecutionPolicy Bypass -Command "iwr https://astral.sh/uv/install.ps1 -UseBasicParsing | iex"
 ```
-- macOS/Linux:
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-> [!TIP]
-> After installing, restart your terminal so `uv` is available on your PATH.
 
-**3) Create the virtual environment and install dependencies**
+Sync environment + dependencies:
+
 ```bash
 uv sync
 ```
-This creates a local `.venv` and installs all dependencies (including the appropriate PyTorch build).
 
-**4) Activate the environment**
+Activate environment:
+
 ```bash
-# Windows
-.venv\Scripts\activate
-
 # Linux/macOS
 source .venv/bin/activate
-```
-> [!WARNING]
-> If activation fails, ensure your shell has permission to run scripts and that you’re in the project directory.
 
-**5) Train the agent**
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+```
+
+Run a training variant:
+
 ```bash
-# Explore available variants
-ls main-v*.py 
-
-# Run one variant (replace x with a number, e.g., 1)
-python main-vx.py
+ls main-v*.py          # discover available variants
+python main-v1.py      # or main-v2.py, etc.
 ```
 
-**6) Monitor training with TensorBoard**
-```bash
-# Change directory to monitor specific PPO if you are running various PPO models (optional)
-cd tensorboard/PPO_1
-# or
-cd tensorboard/PPO_2 
-# ...
-cd tensorboard/PPO_N
-
-# Monitor the graphs
-python -m tensorboard.main --logdir tensorboard-vx # replace 'x' use number 0, 1, 2 to 
-                                                   # know which main file you re running
-```
 ---
-## Export to ONNX
 
-Export a trained Stable-Baselines3 policy to ONNX:
+## 🧪 Training & Experiment Variants
+
+Each `main-vX.py` file encapsulates a slightly different configuration:
+- Hyperparameters (Learning rate, gamma, entropy)
+- Network architecture (Default or Custom)
+- Logging folder (Agent Models)
+- Callback setup
+
+> [!TIP]  
+> Duplicate an existing file to create a new experiment:  
+> `cp main-v1.py main-v3.py` → edit run name, log path, and hyperparameters.
+
+### Suggested Naming Convention
+
+| Variant | Purpose |
+|---------|---------|
+| `main-v0.py` | Baseline PPO |
+| `main-v1.py` | Tuned learning rate / entropy |
+| `main-v2.py` | Different network width |
+| `main-v3.py` | Longer training horizon |
+| `main-vN.py` | Custom experiment |
+
+---
+
+## 📊 Monitoring
+
+Launch TensorBoard (choose the appropriate variant path):
+
+```bash
+python -m tensorboard.main --logdir tensorboard-v1
+```
+
+Or to watch all:
+
+```bash
+python -m tensorboard.main --logdir .
+```
+
+> [!TIP]  
+> If nothing appears, ensure training produced events:  
+> `find tensorboard-v1 -type f -name "*tfevent*"`
+
+---
+
+## 📦 ONNX Export & Deployment
+
+Generate an ONNX policy (after training):
+
 ```bash
 python export_onnx.py
 ```
-> [!NOTE]
-> Ensure you point the script to the correct checkpoint path if you trained multiple variants. Follow [documentation](https://stable-baselines3.readthedocs.io/en/master/guide/export.html)
+
+> [!NOTE]  
+> If the script uses hardcoded paths, edit `export_onnx.py` or extend it with `argparse`.
+
+
+ProtoTwin usage:
+Upload the ONNX file to ProtoTwin or deploy the Python inference.
+
 ---
 
-## Project Structure
+## 🧱 Project Structure
 
 ```text
 .
-├── .venv/                   # Virtual environment managed by uv
-├── logs-vx/                 # Training logs and artifacts for variant x
-│   └── checkpoints/         # Saved model checkpoints
-├── tensorboard-vx/          # TensorBoard logs for variant x
-├── export_onnx.py           # Convert SB3 policy to ONNX
-├── main-vx.py               # Training entry points (variants)
-├── pyproject.toml           # Dependencies and project metadata
-├── uv.lock                  # Lockfile for reproducible builds
-└── README.md                # You are here
+├── main-v1.py             # Training variant 1
+├── main-v2.py             # Training variant 2 (extend as needed)
+├── export_onnx.py         # Convert trained model to ONNX
+├── logs-v1/               # Training logs + checkpoints (variant 1)
+│   └── checkpoints/
+├── tensorboard-v1/        # TensorBoard event files (variant 1)
+├── pyproject.toml         # Project + dependency definitions
+├── uv.lock                # Locked, reproducible dependency set
+└── README.md
 ```
 
-> [!NOTE]
-> Folder names may vary by variant (x). Use the actual paths generated during your runs.
-
+> [!NOTE]  
+> Additional variants (e.g., `logs-v2/`, `tensorboard-v2/`) appear after running those scripts.
 
 ---
 
-## Useful Git commands
+## 🔧 Extending the Project
+
+| Task | How |
+|------|-----|
+| Add a new algorithm | Replace PPO import with another SB3 algorithm |
+| Add custom policy | Define `policy_kwargs` in the training script |
+| Change environment | Swap `CartPole-v1` with another Gymnasium env |
+| Add callbacks | Implement `BaseCallback` and register in training |
+| Log extra metrics | Use custom callback + `self.logger.record()` |
+
+---
+
+## 🧪 Evaluating a Policy
+
+Add (or use) a snippet like:
+
+```python
+from stable_baselines3.common.evaluation import evaluate_policy
+mean_reward, std_reward = evaluate_policy(model, env, n_eval_episodes=10)
+print(f"Mean: {mean_reward:.2f} ± {std_reward:.2f}")
+```
+---
+
+## 🛠 Useful Git Commands
 
 ```bash
-# Check current status
 git status
-
-# Add all changes
 git add .
+git commit -m "Experiment: tuned lr and entropy"
+git push origin main
+```
 
-# Commit your changes
-git commit -m "Improve README and training instructions"
+> [!TIP]  
+> Use branches for big experiments:  
+> `git checkout -b feat/entropy-sweep`
 
-# Push to GitHub
-git push
+---
+
+## 🚑 Troubleshooting
+
+| Symptom | Fix |
+|---------|-----|
+| `uv: command not found` | Reinstall `uv`, restart terminal |
+| No TensorBoard data | Confirm correct `tensorboard-vX/` path |
+| CPU instead of GPU | Check: `python -c "import torch; print(torch.cuda.is_available())"` |
+| ImportError (SB3) | Run `uv sync` again (env might be stale) |
+| Permission denied on activate | On Unix: `chmod +x .venv/bin/activate` (rare) |
+
+> [!CAUTION]  
+> Paths are case-sensitive. Use `cd CartPoleRL`, not `cd cartpolerl`.
+
+---
+
+## 🧭 Roadmap
+
+- [ ] Add evaluation script (e.g., `evaluate.py`)
+- [ ] Hyperparameter sweeps integration (Optuna / WandB)
+- [ ] Dockerfile for containerized deployment
+- [ ] Unified config system (`config/` + YAML)
+- [ ] CI workflow (lint + format + smoke test)
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo  
+2. Create a feature branch: `git checkout -b feat/new-idea`  
+4. Submit PR with: description, metrics, rationale
+
+> [!TIP]  
+> Keep results reproducible—note seeds if changed.
+
+---
+
+## 🙏 Acknowledgements
+
+- [Stable-Baselines3](https://github.com/DLR-RM/stable-baselines3)  
+- [PyTorch](https://pytorch.org/)  
+- [Gymnasium](https://github.com/Farama-Foundation/Gymnasium)  
+- [TensorBoard](https://www.tensorflow.org/tensorboard)  
+- [ProtoTwin Platform](https://prototwin.com/)
+
+---
+
+## 📄 License
+
+
+```text
+MIT License © 2025 Ayman Khan
 ```
 
 ---
 
-## Troubleshooting
+## ⭐ Support
 
-> [!WARNING]
-> uv not found  
-> - Install uv (see Quickstart step 2) or ensure it’s on your PATH.  
-> - Restart your terminal after installation.
-
-> [!TIP]
-> TensorBoard not showing data  
-> - Confirm the correct log directory (e.g., `tensorboard-v1` or `tensorboard-v1/PPO_1`).  
-> - Ensure training has produced logs.
-
-> [!NOTE]
-> Using CPU instead of GPU  
-> PyTorch will fall back to CPU if CUDA is unavailable. To check:
-> ```bash
-> python -c "import torch; print(torch.cuda.is_available())"
-> ```
-
-> [!CAUTION]
-> Case-sensitive paths  
-> Ensure you `cd CartPoleRL`
+If this helps you learn or prototype faster:
+- Star the repo
+- Share feedback
+- Open issues for improvements
 
 ---
-## Acknowledgement
-- Stable Baseline3
-- PyTorch
-- TensorBoard
-- Gymnasium
-- ProtoTwin
 
----
+<p align="center"><strong>Happy balancing! 🛠️🧠</strong></p>
