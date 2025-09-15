@@ -44,6 +44,8 @@ powershell -ExecutionPolicy Bypass -Command "iwr https://astral.sh/uv/install.ps
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
+> [!TIP]
+> After installing, restart your terminal so `uv` is available on your PATH.
 
 **3) Create the virtual environment and install dependencies**
 ```bash
@@ -59,11 +61,13 @@ This creates a local `.venv` and installs all dependencies (including the approp
 # Linux/macOS
 source .venv/bin/activate
 ```
+> [!WARNING]
+> If activation fails, ensure your shell has permission to run scripts and that you’re in the project directory.
 
 **5) Train the agent**
 ```bash
 # Explore available variants
-ls main-v*.py    # or dir main-v*.py on Windows
+ls main-v*.py 
 
 # Run one variant (replace x with a number, e.g., 1)
 python main-vx.py
@@ -71,19 +75,18 @@ python main-vx.py
 
 **6) Monitor training with TensorBoard**
 ```bash
-# Common pattern if logs are separated by variant number
-tensorboard --logdir tensorboard-v1
+# Change directory to monitor specific PPO if you are running various PPO models (optional)
+cd tensorboard/PPO_1
+# or
+cd tensorboard/PPO_2 
+# ...
+cd tensorboard/PPO_N
 
-# If your logs use PPO_* subfolders, point to that folder:
-tensorboard --logdir tensorboard/PPO_1
+# Monitor the graphs
+python -m tensorboard.main --logdir tensorboard-vx # replace 'x' use number 0, 1, 2 to 
+                                                   # know which main file you re running
 ```
-If TensorBoard isn’t found, try:
-```bash
-python -m tensorboard.main --logdir <your-logdir>
-```
-
 ---
-
 ## Project Structure
 
 ```text
