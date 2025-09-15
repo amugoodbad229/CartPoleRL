@@ -87,6 +87,17 @@ python -m tensorboard.main --logdir tensorboard-vx # replace 'x' use number 0, 1
                                                    # know which main file you re running
 ```
 ---
+## Export to ONNX
+
+Export a trained Stable-Baselines3 policy to ONNX:
+```bash
+# See available options
+python export_onnx.py
+```
+> [!NOTE]
+> Ensure you point the script to the correct checkpoint path if you trained multiple variants. Follow [documentation](https://stable-baselines3.readthedocs.io/en/master/guide/export.html)
+---
+
 ## Project Structure
 
 ```text
@@ -106,17 +117,6 @@ python -m tensorboard.main --logdir tensorboard-vx # replace 'x' use number 0, 1
 > Folder names may vary by variant (x). Use the actual paths generated during your runs.
 
 
----
-
-## Export to ONNX
-
-Export a trained Stable-Baselines3 policy to ONNX:
-```bash
-# See available options
-python export_onnx.py
-```
-> [!NOTE]
-> Ensure you point the script to the correct checkpoint path if you trained multiple variants.
 ---
 
 ## Useful Git commands
