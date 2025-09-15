@@ -102,7 +102,9 @@ python -m tensorboard.main --logdir tensorboard-vx # replace 'x' use number 0, 1
 └── README.md                # You are here
 ```
 
-Note: Folder names may vary by variant (x). Use the actual paths generated during your runs.
+> [!NOTE]
+> Folder names may vary by variant (x). Use the actual paths generated during your runs.
+
 
 ---
 
@@ -113,6 +115,8 @@ Export a trained Stable-Baselines3 policy to ONNX:
 # See available options
 python export_onnx.py
 ```
+> [!NOTE]
+> Ensure you point the script to the correct checkpoint path if you trained multiple variants.
 ---
 
 ## Useful Git commands
@@ -135,18 +139,26 @@ git push
 
 ## Troubleshooting
 
-- uv not found:
-  - Install uv (see Quickstart step 2) or ensure it’s on your PATH.
-- TensorBoard not showing data:
-  - Confirm the correct log directory (e.g., tensorboard-v1 or tensorboard/PPO_1)
-  - Ensure training has produced logs.
-- Using CPU instead of GPU:
-  - PyTorch will fall back to CPU if CUDA is unavailable. To check:
-    ```python
-    import torch; print(torch.cuda.is_available())
-    ```
-- Case-sensitive paths:
-  - Ensure you `cd CartPoleRL` (capitalization matters on Linux/macOS).
+> [!WARNING]
+> uv not found  
+> - Install uv (see Quickstart step 2) or ensure it’s on your PATH.  
+> - Restart your terminal after installation.
+
+> [!TIP]
+> TensorBoard not showing data  
+> - Confirm the correct log directory (e.g., `tensorboard-v1` or `tensorboard-v1/PPO_1`).  
+> - Ensure training has produced logs.
+
+> [!NOTE]
+> Using CPU instead of GPU  
+> PyTorch will fall back to CPU if CUDA is unavailable. To check:
+> ```python
+> import torch; print(torch.cuda.is_available())
+> ```
+
+> [!CAUTION]
+> Case-sensitive paths  
+> Ensure you `cd CartPoleRL` (capitalization matters on Linux/macOS).
 
 ---
 
@@ -154,5 +166,6 @@ git push
 
 - Notes PDF: [Important understandings (PDF)](https://jumpshare.com/share/5R2Vt26zIvwhY93lSeQS)
 - Curated resources: [tldraw board](https://www.tldraw.com/f/T6oHe2VW4S5P4fRhE0Aqv?d=v-941.3915.2132.1013.0Nu4aCQvq1Lg7bbzkZt0N)
-
+> [!TIP]
+> Skim the PDF for high-level insights, then use the tldraw board for practical references while iterating on experiments.
 ---
