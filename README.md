@@ -98,14 +98,6 @@ Note: Folder names may vary by variant (x). Use the actual paths generated durin
 
 ---
 
-## How it works
-
-- Environment: Gymnasium’s CartPole environment
-- Algorithm: Proximal Policy Optimization (PPO) via Stable-Baselines3
-- Objective: Learn a policy to keep the pole balanced by moving the cart left or right
-
----
-
 ## Export to ONNX
 
 Export a trained Stable-Baselines3 policy to ONNX:
