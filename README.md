@@ -23,7 +23,7 @@ Train a reinforcement learning agent to balance the CartPole using Proximal Poli
 - Optional: NVIDIA GPU for CUDA acceleration
 - ProtoTwin Connect (PTC)
 > [!NOTE]
-> If you have multiple Python versions installed, make sure your shell uses Python 3.10+ within the `uv` environment.
+> If you have multiple Python versions installed, make sure your shell uses Python 3.10+ within the `uv` environment.\n
 > The project runs on CPU if a compatible GPU is not available.
 
 ---
