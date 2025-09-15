@@ -32,7 +32,7 @@ Note: The project runs on CPU if a compatible GPU is not available.
 **1) Clone the repository**
 ```bash
 git clone https://github.com/amugoodbad229/CartPoleRL.git
-cd CartPoleRL
+cd CartPoleRL 
 ```
 
 **2) Install `uv` (if you don’t have it)**
@@ -158,7 +158,7 @@ git push
 
 > [!CAUTION]
 > Case-sensitive paths  
-> Ensure you `cd CartPoleRL` or the name you gave 
+> Ensure you `cd CartPoleRL`
 
 ---
 
