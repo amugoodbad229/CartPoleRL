@@ -57,7 +57,6 @@ Includes: multiple experiment variants, TensorBoard monitoring, ONNX export, and
 
 > [!NOTE]  
 > PyTorch falls back to CPU automatically if CUDA is not available.
-> 
 > The project will work on CPU, no problem if you do not have a GPU
 
 ---
