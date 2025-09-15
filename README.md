@@ -49,12 +49,12 @@ Clean developer workflow powered by [`uv`](https://github.com/astral-sh/uv) for 
 
 ## ✅ Prerequisites
 
-- Python 3.10+  
+- Python 3.10+
+- ProtoTwin Connect for training and deployment 
 - NVIDIA GPU + CUDA-capable PyTorch build (Optional)  
-- ProtoTwin Connect (PTC) for deployment  
+ 
 
-> [!NOTE]  
-> PyTorch falls back to CPU automatically if CUDA is not available.  
+> [!NOTE]    
 > The project will work on CPU, no problem if you do not have a GPU
 
 ---
