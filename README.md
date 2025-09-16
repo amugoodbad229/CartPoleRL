@@ -100,6 +100,9 @@ Run a training variant:
 ```bash
 ls main-v*.py          # discover available variants
 python main-v1.py      # or main-v2.py, etc.
+
+# OPTIONAL: For custom CLI commands
+python main-v1.py --num_envs 32 --initial_lr 0.001 --num_timesteps 500000
 ```
 
 ---
