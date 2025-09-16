@@ -74,6 +74,9 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Windows
 winget install --id=astral-sh.uv -e
+
+# Check installation
+uv --version
 ```
 
 Sync environment + dependencies:
