@@ -11,6 +11,8 @@ from stable_baselines3.ppo import MlpPolicy
 from stable_baselines3.common.vec_env import VecMonitor
 from stable_baselines3.common.callbacks import CheckpointCallback
 
+# import argparse # Uncomment it if you want to create CLI commands
+
 # STEP 2: Define signal addresses (obtain these values from ProtoTwin)
 cart_motor_target_velocity = 3
 cart_motor_current_position = 5
@@ -21,8 +23,8 @@ pole_motor_current_velocity = 13
 
 # STEP 3: Create your vectorized instance environment by extending the base environment
 class CartPoleEnv(VecEnvInstance):
-    # Here self refers to the instance of CartPoleEnv
-    # It is python's way of defining class methods
+    # Here, self refers to the instance of CartPoleEnv
+    # It is Python's way of defining class methods
     def __init__(self, client: prototwin.Client, instance: int) -> None:
         super().__init__(client, instance)
         self.max_cart_position = 0.65  # Maximum cart distance
@@ -41,7 +43,7 @@ class CartPoleEnv(VecEnvInstance):
     def normalize_angle(self, angle_val):
         '''
         Normalizes the pole's angle to be within the range [-1, 1]
-        Using atan2(y, x) to get the radian angle and then normalizing it by pi as the limit is [-pi, pi]
+        Using atan2(y, x) to get the radian angle and then normalizing it by pi, as the limit is [-pi, pi]
         '''
         return math.atan2(math.sin(angle_val), math.cos(math.pi - angle_val)) / math.pi
 
@@ -55,7 +57,7 @@ class CartPoleEnv(VecEnvInstance):
         '''
         Reward for keeping the cart close to the center.
         '''
-        # Max reward is 1 when at center, decreases to 0 at limits
+        # Max reward is 1 when at the center, decreases to 0 at the limits
         # (e.g. 1 - 0 = 1 --> center, 1 - 1 = 0 --> limit).
         # Only writing `return math.fabs(normalized_position)` will give negative rewards (penalty)
         # (e.g. 1 - 1 = 0 --> center, 1 - 0 = 1 --> limit).
@@ -70,7 +72,7 @@ class CartPoleEnv(VecEnvInstance):
     def reward(self, obs):
         '''
         Calculate the total reward for the current state.
-        The hyperparameters here can be tuned for the desired behavior.
+        The hyperparameters can be tuned to achieve the desired behavior.
         '''
         # obs[0] and obs[1] comes from self.observations() function below
         # obs[0] is normalized_cart_position
@@ -82,7 +84,7 @@ class CartPoleEnv(VecEnvInstance):
 
         total_reward = 0.8 * angle_reward + 0.2 * distance_reward  - 0.004 * force_penalty
         return max(total_reward * dt, 0) # Ensure reward is non-negative. But we can improve it by not 
-                                         # using the max function as we will see in main-v1.py
+                                         # using the max function, as we will see in main-v1.py
 
     def observations(self):
         '''
@@ -99,19 +101,19 @@ class CartPoleEnv(VecEnvInstance):
 
         # Return the observations as a numpy array
         # The order of observations is important and should match the training setup
-        # By that I mean the order in which the observations are defined in the observation space
+        # By that, I mean the order in which the observations are defined in the observation space
         return np.array([normalized_cart_position, normalized_pole_angle, cart_velocity, pole_angular_velocity])
 
     def reset(self, seed = None):
         super().reset(seed=seed)
         return self.observations(), {} # Return initial observation and empty info. 
-                                       # Do not remove the {} as it is required by the Gymnasium API
+                                       # Do not remove the {} as the Gymnasium API requires it
 
     def apply(self, action):
         '''
         Apply the given action to the environment.
         '''
-        # .set(signal_address, value) stores the value to the given signal address
+        # .set(signal_address, value) stores the value at the given signal address
         # action[0] means the first element of the action array
         self.set(cart_motor_target_velocity, action[0]) # Apply action by setting the cart's target velocity
 
@@ -124,7 +126,20 @@ class CartPoleEnv(VecEnvInstance):
 
 # STEP 4: Setup the training session
 async def main():
+    '''
+    # OPTIONAL: If you want to tune it just from the terminal
+    # Setup argument parser
+    parser = argparse.ArgumentParser(description="Train a CartPole agent using PPO on ProtoTwin.")
+    parser.add_argument("--num_envs", type=int, default=64, help="Number of parallel environments.")
+    parser.add_argument("--save_freq", type=int, default=10000, help="Number of timesteps per instance to save the model.")
+    parser.add_argument("--num_timesteps", type=int, default=100000, help="Total number of timesteps to train.")
+    parser.add_argument("--initial_lr", type=float, default=0.003, help="Initial learning rate.")
+    parser.add_argument("--log_path", type=str, default="./logs-v0/", help="Path to save logs and checkpoints.")
 
+    # Parse arguments
+    args = parser.parse_args()
+    '''
+    
     # Launch ProtoTwin Connect and load the cartpole-v1 model
     client = await prototwin.start()
     filepath = os.path.join(os.path.dirname(__file__), "cartpole-v0.ptm")
@@ -137,7 +152,7 @@ async def main():
     # 2. The cart's current velocity (m/s)
     # 3. The pole's angular velocity (rad/s)
 
-    # The explanation of dtype is provided in the pdf document. See readme for link.
+    # The explanation of dtype is provided in the PDF document. See the readme for the link.
     # The array will look like --> np.array[1, 1, infinity, infinity]
     observation_high = np.array([1, 1, np.finfo(np.float32).max, np.finfo(np.float32).max], dtype=np.float32)
     # gymnasiuam.spaces.Box is used to define continuous spaces between a lower and upper bound
@@ -146,24 +161,27 @@ async def main():
     # The action space contains only the cart's target velocity
     # because we are controlling the cart motor by setting its target velocity
     # Output values will be in the range [-1.0, 1.0]
-    # That is why we set [-1.0, 1.0] on ProtoTwin editor using Typescript
-    # Such range is standard practice for normalizing continuous actions like velocity or force.
+    # That is why we set [-1.0, 1.0] on the ProtoTwin editor using Typescript
+    # Such a range is standard practice for normalizing continuous actions like velocity or force.
     action_high = np.array([1.0], dtype=np.float32)
     action_space = gymnasium.spaces.Box(-action_high, action_high, dtype=np.float32)
 
     # Create the vectorized environment
     entity_name = "MAIN-v0"
+    # num_envs = args.num_envs # Uncomment this and remove the line below. 
+                               # If you want to pass custom CLI commands, 
+                               # write them like this for the rest of the variables
     num_envs = 64 # Number of parallel environments
-    # pattern and spacing are optional parameters and default to prototwin.Pattern.GRID and 1 respectively
+    # pattern and spacing are optional parameters and default to prototwin.Pattern.GRID and 1, respectively
     env = VecEnv(CartPoleEnv, client, entity_name, num_envs, observation_space, action_space)
     env = VecMonitor(env) # Monitor the training progress
 
-    # Create callback to regularly save the model
+    # Create a callback to regularly save the model
     save_freq = 10000 # Number of timesteps per instance
     checkpoint_callback = CheckpointCallback(save_freq=save_freq, save_path="./logs-v0/checkpoints/",
         name_prefix="checkpoint", save_replay_buffer=True, save_vecnormalize=True)
 
-    # Define learning rate schedule. Described in the tldraw link. See readme for link.
+    # Define learning rate schedule. Described in the tldraw link. See the readme for the link.
     def lr_schedule(progress_remaining):
         initial_lr = 0.003
         return initial_lr * (progress_remaining ** 2) # ** means "to the power of"
