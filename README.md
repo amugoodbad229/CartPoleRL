@@ -72,8 +72,8 @@ Install `uv` (one time):
 # macOS / Linux
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Windows (PowerShell)
-powershell -ExecutionPolicy Bypass -Command "iwr https://astral.sh/uv/install.ps1 -UseBasicParsing | iex"
+# Windows
+winget install --id=astral-sh.uv -e
 ```
 
 Sync environment + dependencies:
