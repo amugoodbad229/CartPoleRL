@@ -1,5 +1,6 @@
 # STEP 1: Import dependencies
-import asyncio
+import asyncio # asyncio is used for asynchronous programming
+               # by that I mean running multiple tasks at the same time
 import os
 import numpy as np
 import math
@@ -125,6 +126,11 @@ class CartPoleEnv(VecEnvInstance):
         return obs, reward, done, truncated, {}
 
 # STEP 4: Setup the training session
+# async means this function will run asynchronously
+# e.g. communicating with ProtoTwin and training the agent at the same time  
+# This is important for performance when using multiple environments
+# if we used a normal def function, it would block the execution until the function is complete
+# by that I mean it would wait for the function to finish before moving on to the next line of code
 async def main():
     '''
     # OPTIONAL: If you want to tune it just from the terminal
@@ -195,4 +201,8 @@ async def main():
     model.learn(total_timesteps=10_000_000, callback=checkpoint_callback)
 
 if __name__ == '__main__':
+<<<<<<< HEAD
+    asyncio.run(main()) # Run the main function asynchronously
+=======
     asyncio.run(main())
+>>>>>>> 7c65c266c2a57620c2b83728397891ce6984c37e
