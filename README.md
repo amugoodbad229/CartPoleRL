@@ -255,10 +255,7 @@ git push origin main
 
 1. Fork the repo  
 2. Create a feature branch: `git checkout -b feat/new-idea`  
-4. Submit PR with: description, metrics, rationale
-
-> [!TIP]  
-> Keep results reproducible—note seeds if changed.
+3. Submit PR with: description, metrics, rationale
 
 ---
 
