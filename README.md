@@ -1,7 +1,7 @@
 # 🏋️‍♂️ CartPoleRL  
-Modern PPO-based Reinforcement Learning for solving the classic CartPole control task using [Stable-Baselines3](https://github.com/DLR-RM/stable-baselines3).  
-Clean developer workflow powered by [`uv`](https://github.com/astral-sh/uv) for fast, reproducible Python environments.  
-[ProtoTwin](https://prototwin.com/): multiple experiment variants, TensorBoard monitoring, ONNX export, and inference on the platform.
+
+Train and ship a PPO agent for CartPole using [Stable-Baselines3](https://github.com/DLR-RM/stable-baselines3). The project uses [`uv`](https://github.com/astral-sh/uv) for fast, reproducible environments and includes ready-to-run experiment variants, TensorBoard monitoring, ONNX export, and seamless [ProtoTwin](https://prototwin.com/) integration for inference. 
+> It’s designed to take you from a naive baseline to industry‑standard practice with structured experiments, reproducible training, model packaging, and deployment. You can train on ProtoTwin, export to ONNX, and run inference on ProtoTwin by writing simple control logic in TypeScript.
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.10%2B-blue?logo=python" />
