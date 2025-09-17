@@ -75,7 +75,7 @@ class CartPoleEnv(VecEnvInstance):
         Calculate the total reward for the current state.
         The hyperparameters can be tuned to achieve the desired behavior.
         '''
-        # obs[0] and obs[1] comes from self.observations() function below
+        # obs[0] and obs[1] comes from self.observations() from step(self) function
         # obs[0] is normalized_cart_position
         # obs[1] is normalized_pole_angle
         dt = 0.01
@@ -87,6 +87,7 @@ class CartPoleEnv(VecEnvInstance):
         return max(total_reward * dt, 0) # Ensure reward is non-negative. But we can improve it by not 
                                          # using the max function, as we will see in main-v1.py
 
+    # Get the current observations from the environment
     def observations(self):
         '''
         Get the current observations from the environment
@@ -105,11 +106,13 @@ class CartPoleEnv(VecEnvInstance):
         # By that, I mean the order in which the observations are defined in the observation space
         return np.array([normalized_cart_position, normalized_pole_angle, cart_velocity, pole_angular_velocity])
 
+    # Reset the environment to an initial state
     def reset(self, seed = None):
         super().reset(seed=seed)
         return self.observations(), {} # Return initial observation and empty info. 
                                        # Do not remove the {} as the Gymnasium API requires it
 
+    # Apply the given action to the environment
     def apply(self, action):
         '''
         Apply the given action to the environment.
@@ -118,6 +121,8 @@ class CartPoleEnv(VecEnvInstance):
         # action[0] means the first element of the action array
         self.set(cart_motor_target_velocity, action[0]) # Apply action by setting the cart's target velocity
 
+    # Advance the environment by one time step
+    # return values goes to the model.learn() function in main()
     def step(self):
         obs = self.observations()
         reward = self.reward(obs) # Calculate reward
@@ -160,16 +165,23 @@ async def main():
 
     # The explanation of dtype is provided in the PDF document. See the readme for the link.
     # The array will look like --> np.array[1, 1, infinity, infinity]
+    # why 1? because the cart's position and pole's angle are normalized to be within [-1, 1]
+    # why infinity? because the cart's velocity and pole's angular velocity can be any value
     observation_high = np.array([1, 1, np.finfo(np.float32).max, np.finfo(np.float32).max], dtype=np.float32)
     # gymnasiuam.spaces.Box is used to define continuous spaces between a lower and upper bound
+    # why we need this? because the agent needs to know the limits of the environment
+    # e.g. if the cart's position is -0.5, the agent knows
     observation_space = gymnasium.spaces.Box(-observation_high, observation_high, dtype=np.float32)
     
     # The action space contains only the cart's target velocity
     # because we are controlling the cart motor by setting its target velocity
     # Output values will be in the range [-1.0, 1.0]
-    # That is why we set [-1.0, 1.0] on the ProtoTwin editor using Typescript
+    # IMPORTANT: This is why we set [-1.0, 1.0] on the ProtoTwin code editor 
     # Such a range is standard practice for normalizing continuous actions like velocity or force.
+    # why 1.0? because the cart's target velocity is normalized to be within [-1.0, 1.0]
+    # where did we normalize it? In the apply(self, action) function above
     action_high = np.array([1.0], dtype=np.float32)
+    # why we need this? because the agent needs to know the limits of the actions it can take
     action_space = gymnasium.spaces.Box(-action_high, action_high, dtype=np.float32)
 
     # Create the vectorized environment
@@ -201,8 +213,4 @@ async def main():
     model.learn(total_timesteps=10_000_000, callback=checkpoint_callback)
 
 if __name__ == '__main__':
-<<<<<<< HEAD
     asyncio.run(main()) # Run the main function asynchronously
-=======
-    asyncio.run(main())
->>>>>>> 7c65c266c2a57620c2b83728397891ce6984c37e
