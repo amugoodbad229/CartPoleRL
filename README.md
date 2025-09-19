@@ -107,6 +107,26 @@ python main-v1.py --num_envs 32 --initial_lr 0.001 --num_timesteps 500000
 
 ---
 
+## 📊 Monitoring
+
+Launch TensorBoard (choose the appropriate variant path):
+
+```bash
+python -m tensorboard.main --logdir tensorboard-v1
+```
+
+Or to watch all:
+
+```bash
+python -m tensorboard.main --logdir .
+```
+
+> [!TIP]  
+> If nothing appears, ensure training produced events:  
+> `find tensorboard-v1 -type f -name "*tfevent*"`
+
+---
+
 ## 🧪 Training & Experiment Variants
 
 Each `main-vX.py` file encapsulates a slightly different configuration:
@@ -128,26 +148,6 @@ Each `main-vX.py` file encapsulates a slightly different configuration:
 | `main-v2.py` | Different network width |
 | `main-v3.py` | Longer training horizon |
 | `main-vN.py` | Custom experiment |
-
----
-
-## 📊 Monitoring
-
-Launch TensorBoard (choose the appropriate variant path):
-
-```bash
-python -m tensorboard.main --logdir tensorboard-v1
-```
-
-Or to watch all:
-
-```bash
-python -m tensorboard.main --logdir .
-```
-
-> [!TIP]  
-> If nothing appears, ensure training produced events:  
-> `find tensorboard-v1 -type f -name "*tfevent*"`
 
 ---
 
